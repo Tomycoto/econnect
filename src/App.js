@@ -1,4 +1,5 @@
 import './App.css';
+import ForumOverview from './ForumOverview';
 import TopBar from './Topbar';
 import styled from 'styled-components';
 
@@ -11,7 +12,8 @@ function App() {
   return (
     <AppContainer>
       <TopBar />
-      {/* Your app content goes here */}
+      <ForumOverview></ForumOverview>
+
     </AppContainer>
   );
 }
