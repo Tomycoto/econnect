@@ -1,5 +1,7 @@
 import './App.css';
+import { useState } from 'react';
 import TopBar from './Topbar';
+import NavBar from './NavBar';
 import styled from 'styled-components';
 
 const AppContainer = styled.div`
@@ -8,10 +10,14 @@ const AppContainer = styled.div`
 `;
 
 function App() {
+  const [activeItem, setActiveItem] = useState('Home'); // Set the initial active item
+  const changeActiveItem = (newItem) => {
+    setActiveItem(newItem);
+  };
   return (
     <AppContainer>
-      <TopBar />
-      {/* Your app content goes here */}
+      <TopBar/>
+      <NavBar activeItem={activeItem}/>
     </AppContainer>
   );
 }
