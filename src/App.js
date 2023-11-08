@@ -1,24 +1,14 @@
-import './App.css';
-import { useState } from 'react';
-import TopBar from './Topbar';
-import NavBar from './NavBar';
-import styled from 'styled-components';
+import React from 'react';
+import { Routes, Route } from 'react-router-dom';
+import Homepage from './Homepage';
+import Mappage from './Mappage';
 
-const AppContainer = styled.div`
-  max-width: 100%;
-  margin: 0 auto;
-`;
 
 function App() {
-  const [activeItem, setActiveItem] = useState('Home'); // Set the initial active item
-  const changeActiveItem = (newItem) => {
-    setActiveItem(newItem);
-  };
   return (
-    <AppContainer>
-      <TopBar/>
-      <NavBar activeItem={activeItem}/>
-    </AppContainer>
+    <Routes>
+      <Route path="/" element={<Homepage/>} />
+    </Routes>
   );
 }
 
