@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 
 const Bar = styled.nav`
   display: flex;
@@ -8,6 +9,8 @@ const Bar = styled.nav`
   background-color: #333;
   color: #fff;
   padding: 1rem;
+  position: fixed;
+  width: 100%;
 `;
 
 const BarItem = styled.li`
@@ -42,8 +45,14 @@ const TopBar = () => {
       <Logo>ECOnnect</Logo>
       <DesktopBar>
         <BarItem><a>Daejeon KAIST</a></BarItem>
-        <BarItem><a ># of Points</a></BarItem>
-        <BarItem><a >Username</a></BarItem>
+        <BarItem>
+          <div>
+            <EmojiEventsIcon></EmojiEventsIcon>
+            <a >2000</a>
+          </div>
+        </BarItem>
+        <BarItem><a >@Username</a></BarItem>
+        <BarItem></BarItem>
       </DesktopBar>
     </Bar>
   );
