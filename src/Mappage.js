@@ -52,17 +52,20 @@ function Mappage() {
       <TopBar/>
       <LayoutContainer>
         <NavBar activeItem={'Nearby Events'}/>
-        <div style={{ display: 'flex' }}>
-          <MapContainer style={{ width: '70%', cursor: 'default'}} center={position} zoom={13}>
+        <div style={{ display: 'flex', flexDirection: 'row', width: '85%' }}>
+          <MapContainer style={{marginTop: '1%', cursor: 'default', width: '60%'}} center={position} zoom={13}>
             <TileLayer
-              attribution='© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            attribution='© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
             <Markers />
           </MapContainer>
           <div style={{ width: '30%', overflowY: 'auto' }}>
             {markerPositions.map((pos, idx) => (
-              <p key={idx}>{`Marker ${idx + 1}: ${pos.lat}, ${pos.lng}`}</p>
+              <div key={idx}>
+                <h3 contentEditable>{idx +1}- Title </h3>
+                <p contentEditable>{`Marker ${idx + 1}: ${pos.lat}, ${pos.lng}`}</p>
+              </div>
             ))}
           </div>
         </div>
@@ -71,6 +74,6 @@ function Mappage() {
   );
 }
 
-
+//<p key={idx}>{`Marker ${idx + 1}: ${pos.lat}, ${pos.lng}`}</p>
 
 export default Mappage;
