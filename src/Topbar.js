@@ -23,6 +23,7 @@ const BarItem = styled.li`
 
 const Logo = styled.h1`
   font-size: 1.5rem;
+  color: #8FEF79;
   margin: 0;
 `;
 
@@ -40,11 +41,9 @@ const TopBar = () => {
     <Bar>
       <Logo>ECOnnect</Logo>
       <DesktopBar>
-        <BarItem><a>Location</a></BarItem>
-        <BarItem><a >Home</a></BarItem>
-        <BarItem><a >About</a></BarItem>
-        <BarItem><a >Services</a></BarItem>
-        <BarItem><a >Contact</a></BarItem>
+        <BarItem><a>Daejeon KAIST</a></BarItem>
+        <BarItem><a ># of Points</a></BarItem>
+        <BarItem><a >Username</a></BarItem>
       </DesktopBar>
     </Bar>
   );

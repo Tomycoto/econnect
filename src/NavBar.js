@@ -9,15 +9,14 @@ const NavBar = ({activeItem}) => {
         <Drawer
         sx={{
             '& .MuiDrawer-paper': {
-                width: '15%',
-                marginTop: '8%',
+                position: 'static',
             },
             }}
             variant="permanent"
             anchor="left">
             <List>
                 <div>
-                    <ListItem component ={Link} to="/" style={{ background: activeItem === 'Home' ? '#F4FEF2' : 'white', pointerEvents: activeItem === 'Home' ? 'none' : 'auto' }}>
+                    <ListItem component ={Link} to="/" style={{color: 'inherit', background: activeItem === 'Home' ? '#F4FEF2' : 'white', pointerEvents: activeItem === 'Home' ? 'none' : 'auto' }}>
                         <ListItemButton>
                             <ListItemIcon>
                                 <HomeIcon style={{ color: activeItem === 'Home' ? '#8FEF79' : 'inherit' }}/>
@@ -27,7 +26,7 @@ const NavBar = ({activeItem}) => {
                     </ListItem>
                 </div>
                 <div>
-                <ListItem component ={Link} to="/map" style={{ background: activeItem === 'Nearby Events' ? '#F4FEF2' : 'white', pointerEvents: activeItem === 'Nearby Events' ? 'none' : 'auto' }}>
+                <ListItem component ={Link} to="/map" style={{color: 'inherit', background: activeItem === 'Nearby Events' ? '#F4FEF2' : 'white', pointerEvents: activeItem === 'Nearby Events' ? 'none' : 'auto' }}>
                         <ListItemButton>
                             <ListItemIcon>
                                 <MapIcon style={{ color: activeItem === 'Nearby Events' ? '#8FEF79' : 'inherit' }}/>
