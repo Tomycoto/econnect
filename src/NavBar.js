@@ -10,8 +10,9 @@ const NavBar = ({activeItem}) => {
         <Drawer
         sx={{
             '& .MuiDrawer-paper': {
-                position: 'static',
-                width: '100%',
+                position: 'fixed',
+                width: '15%',
+                marginTop: '8%',
             },
             }}
             variant="permanent"

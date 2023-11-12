@@ -67,7 +67,7 @@ function card(posterName, postTitle, postContent) {
 
 const ForumOverview = () => {
   return (
-    <div style={{ paddingTop: 82 }}>
+    <div style={{ paddingTop: '8%' }}>
       {card("username1", "Title of post about cool topic", "Content asdlkjshaf asdfjkasldfh... adshflkjahds  ,.a sdflajsdf ")}
       {card("username2", "Title o2 2 post about cool topic", "Content asdlkjshaf asdfjkasldfh... adshflkjahds  ,.a sdflajsdf ")}
       {card("username3", "Title of post abouaölkfjdlaskjt cool topic", "Conteasdant asdlkjshaf asdfjkasldfh... adshflkjahds  ,.a sdflajsdf ")}

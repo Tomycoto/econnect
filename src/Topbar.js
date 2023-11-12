@@ -11,6 +11,7 @@ const Bar = styled.nav`
   padding: 1rem;
   position: fixed;
   width: 100%;
+  z-index: 10;
 `;
 
 const BarItem = styled.li`
