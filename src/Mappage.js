@@ -55,7 +55,8 @@ function writeEventData(title, text, position) {
   db_ref.push().set({
     title: title,
     text: text,
-    position: position
+    position: position,
+    thumbsup: 0
   })
   .then(() => {
     console.log("Text added successfully");
@@ -70,17 +71,20 @@ function Mappage() {
   useEffect(() => {
     events_ref.on('value', (snapshot) => {
     const data = snapshot.val();
-    const entries = Object.entries(data);
-    const newMarkers = entries.map(([key, value], idx) => {
-      return {
-        key: key,
-        text: value.text,
-        title: value.title,
-        position: value.position
-      };
-    });
-    setMarkers(newMarkers);
-    setSavedMarkers(newMarkers.map((_, idx) => idx));
+    if (data) {
+      const entries = Object.entries(data);
+      const newMarkers = entries.map(([key, value], idx) => {
+        return {
+          key: key,
+          text: value.text,
+          title: value.title,
+          position: value.position,
+          thumbsup: value.thumbsup
+        };
+      });
+      setMarkers(newMarkers);
+      setSavedMarkers(newMarkers.map((_, idx) => idx));
+    }
   });
   }, []);
   
@@ -90,7 +94,7 @@ function Mappage() {
   const Markers = () => {
     useMapEvents({
       click: (e) => {
-        setMarkers([...markers, { position: e.latlng, title: '', text: '' }]);
+        setMarkers([...markers, { position: e.latlng, title: '', text: '', thumbsup: 0 }]);
       },
     });
     return markers.map((marker, idx) => (
@@ -112,33 +116,51 @@ function Mappage() {
     setMarkers(newMarkers);
   };
 
-function removeMarker(index) {
-  setMarkers(markers.filter((_, idx) => idx !== index));
-  if (markers[index].key!=null) {
-    var itemRef = events_ref.child(markers[index].key);
-    itemRef.remove()
-      .then(function() {
-        console.log("Remove succeeded.")
-      })
-      .catch(function(error) {
-        console.log("Remove failed: " + error.message)
-      }); 
-  }
-}
-
-  const saveMarker = (index) => {
+  const incrementThumbsup = (index) => {
     const pin = markers[index];
+    pin.thumbsup += 1;
     if (pin.key) {
       var itemRef = events_ref.child(pin.key);
       itemRef.update({
         title: pin.title,
         text: pin.text,
-        position: pin.position
+        position: pin.position,
+        thumbsup: pin.thumbsup
+      });
+    }
+    var newMarkers = [...markers];
+    newMarkers[index] = pin;
+    setMarkers(newMarkers);
+  };  
+
+  function removeMarker(index) {
+    setMarkers(markers.filter((_, idx) => idx !== index));
+    if (markers[index].key!=null) {
+      var itemRef = events_ref.child(markers[index].key);
+      itemRef.remove()
+        .then(function() {
+          console.log("Remove succeeded.")
+        })
+        .catch(function(error) {
+          console.log("Remove failed: " + error.message)
+        }); 
+    }
+  }
+
+  const saveMarker = (index) => {
+    const pin = markers[index];
+    setSavedMarkers([...savedMarkers, index]);
+    if (pin.key) {
+      var itemRef = events_ref.child(pin.key);
+      itemRef.update({
+        title: pin.title,
+        text: pin.text,
+        position: pin.position,
+        thumbsup: pin.thumbsup
       });
     } else {
-      writeEventData(pin.title, pin.text, pin.position);
+      writeEventData(pin.title, pin.text, pin.position, pin.thumbsup);
     } 
-    setSavedMarkers([...savedMarkers, index]);
   };
 
 
@@ -148,14 +170,14 @@ function removeMarker(index) {
       <LayoutContainer>
         <NavBar activeItem={'Nearby Events'}/>
         <div style={{display: 'flex', flexDirection: 'row', width: '85%', paddingTop: '8%'}}>
-          <MapContainer style={{marginLeft: '20%', cursor: 'default', width: '50%', position: 'fixed'}} center={position} zoom={13}>
+          <MapContainer style={{marginLeft: '17%', cursor: 'default', width: '50%', position: 'fixed'}} center={position} zoom={13}>
             <TileLayer
             attribution='© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
             <Markers />
           </MapContainer>
-          <div style={{marginLeft: '85%', width: '30%' }}>
+          <div style={{marginLeft: '80%', width: '35%' }}>
             {markers.map((marker, idx) => (
               <MarkerContainer style={savedMarkers.includes(idx) ? {backgroundColor: '#F4FEF2'} : {}} key={idx}>
                 <MarkerContent>
@@ -174,6 +196,7 @@ function removeMarker(index) {
                 </MarkerContent>
                 <Button onClick={() => removeMarker(idx)}> <CloseIcon/></Button>
                 <Button onClick={() => saveMarker(idx)}> <CheckIcon/></Button>
+                <Button onClick={() => incrementThumbsup(idx)}>👍 {marker.thumbsup}</Button>
               </MarkerContainer>
             ))}
           </div>
