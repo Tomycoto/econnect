@@ -65,8 +65,14 @@ const TopBar = () => {
             <a >2000</a>
           </div>
         </BarItem>
-        <BarItem><Button component ={Link} to="/login" style={{color: 'inherit'}}> {user ? <a>{user.displayName}</a> : <LoginIcon/>}</Button></BarItem>
-        <BarItem></BarItem>
+        {user ? (
+          <>
+            <BarItem><Button style={{color: 'inherit'}} disabled>{user.displayName}</Button></BarItem>
+            <BarItem><Button component={Link} to="/logout" style={{color: 'inherit'}}><LogoutIcon/></Button></BarItem>
+          </>
+        ) : (
+          <BarItem><Button component={Link} to="/login" style={{color: 'inherit'}}><LoginIcon/></Button></BarItem>
+        )}
       </DesktopBar>
     </Bar>
   );
