@@ -9,6 +9,7 @@ import { Icon } from 'leaflet';
 import { MapContainer, TileLayer, Marker, Popup, useMapEvents  } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import icon from './img/loc_pin.png';
+import { getAuth, updateProfile } from "firebase/auth";
 
 const MappageContainer = styled.div`
   max-width: 100%;
@@ -65,6 +66,8 @@ function writeEventData(title, text, position) {
 }
 
 function Mappage() {
+  const auth = getAuth();
+  const user = auth.currentUser;
   var events_ref = db.ref("events");
   useEffect(() => {
     events_ref.on('value', (snapshot) => {
@@ -129,6 +132,23 @@ function Mappage() {
     var newMarkers = [...markers];
     newMarkers[index] = pin;
     setMarkers(newMarkers);
+    if (user !== null) {
+      const displayName = user.displayName;
+      const [username, points] = displayName.split('|');
+      const newPoints = parseInt(points) + 1;
+      updateProfile(auth.currentUser, {
+        displayName: `${username}|${newPoints}`,
+      })
+      .then(() => {
+        // Profile updated successfully!
+        console.log(`New points: ${newPoints}`);
+      })
+      .catch((error) => {
+        // An error happened.
+        console.log(error);
+      });
+    }
+    
   };  
 
   function removeMarker(index) {

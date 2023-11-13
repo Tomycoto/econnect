@@ -12,6 +12,11 @@ function SignupPage() {
     const Signup = async (e) => {
       e.preventDefault();
   
+      if (username.includes('|')) {
+        setError('Username cannot contain the "|" character');
+        return;
+      }
+
       // Basic email validation
       if (!/\S+@\S+\.\S+/.test(email)) {
         setError('Invalid email');
@@ -30,7 +35,7 @@ function SignupPage() {
           const user = userCredential.user;
           console.log(user);
           updateProfile(auth.currentUser, {
-            displayName: username,
+            displayName: `${username}|0`,
           })
           .then(() => {
             // Profile updated successfully!

@@ -62,12 +62,12 @@ const TopBar = () => {
         <BarItem>
           <div>
             <EmojiEventsIcon></EmojiEventsIcon>
-            <a >2000</a>
+            <a >{user ? user.displayName.split('|')[1] : 'Loading...'}</a>
           </div>
         </BarItem>
         {user ? (
           <>
-            <BarItem><Button style={{color: 'inherit'}} disabled>{user.displayName}</Button></BarItem>
+            <BarItem><Button style={{color: 'inherit'}} disabled>{user ? user.displayName.split('|')[0] : 'Loading...'}</Button></BarItem>
             <BarItem><Button component={Link} to="/logout" style={{color: 'inherit'}}><LogoutIcon/></Button></BarItem>
           </>
         ) : (
