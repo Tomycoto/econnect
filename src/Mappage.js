@@ -1,16 +1,14 @@
 import './Mappage.css';
-import { useState, useEffect } from 'react';
 import TopBar from './Topbar';
 import NavBar from './NavBar';
-import styled from 'styled-components';
-import 'leaflet/dist/leaflet.css';
-import {Button} from '@mui/material';
-import { MapContainer, TileLayer, Marker, Popup, useMapEvents  } from 'react-leaflet';
-import { Icon } from 'leaflet';
-import icon from './img/loc_pin.png';
-import CloseIcon from '@mui/icons-material/Close';
-import CheckIcon from '@mui/icons-material/Check';
 import { db } from './firebase';
+import { useState, useEffect } from 'react';
+import {Button} from '@mui/material';
+import styled from 'styled-components';
+import { Icon } from 'leaflet';
+import { MapContainer, TileLayer, Marker, Popup, useMapEvents  } from 'react-leaflet';
+import 'leaflet/dist/leaflet.css';
+import icon from './img/loc_pin.png';
 
 const MappageContainer = styled.div`
   max-width: 100%;
@@ -194,8 +192,8 @@ function Mappage() {
                     onChange={(event) => handleTextChange(event, idx)}
                   />
                 </MarkerContent>
-                <Button onClick={() => removeMarker(idx)}> <CloseIcon/></Button>
-                <Button onClick={() => saveMarker(idx)}> <CheckIcon/></Button>
+                <Button onClick={() => removeMarker(idx)}>✖️</Button>
+                <Button onClick={() => saveMarker(idx)}>✔️</Button>
                 <Button onClick={() => incrementThumbsup(idx)}>👍 {marker.thumbsup}</Button>
               </MarkerContainer>
             ))}

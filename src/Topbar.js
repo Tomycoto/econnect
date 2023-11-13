@@ -1,6 +1,11 @@
-import React from 'react';
+import {React, useState, useEffect} from 'react';
 import styled from 'styled-components';
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
+import {Button} from '@mui/material';
+import {Link} from 'react-router-dom';
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import LoginIcon from '@mui/icons-material/Login';
+import LogoutIcon from '@mui/icons-material/Logout';
 
 const Bar = styled.nav`
   display: flex;
@@ -41,6 +46,14 @@ const DesktopBar = styled.ul`
 `;
 
 const TopBar = () => {
+  const [user, setUser] = useState(null);
+  useEffect(() => {
+    const auth = getAuth();
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+    });
+    return () => unsubscribe();
+  }, [user]);
   return (
     <Bar>
       <Logo>ECOnnect</Logo>
@@ -52,7 +65,7 @@ const TopBar = () => {
             <a >2000</a>
           </div>
         </BarItem>
-        <BarItem><a >@Username</a></BarItem>
+        <BarItem><Button component ={Link} to="/login" style={{color: 'inherit'}}> {user ? <a>{user.displayName}</a> : <LoginIcon/>}</Button></BarItem>
         <BarItem></BarItem>
       </DesktopBar>
     </Bar>
