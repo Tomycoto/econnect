@@ -1,7 +1,7 @@
+import './LogoutPage.css';
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getAuth, signOut } from "firebase/auth";
-import { Button } from '@mui/material';
 
 function LogoutPage() {
     const navigate = useNavigate();
@@ -17,10 +17,12 @@ function LogoutPage() {
     }, []);
   
     return (
-      <div>
+      <div className="logoutPage">
         <h2>You have been disconnected.</h2>
-        <Button onClick={() => navigate("/")}>Login to another account</Button>
-        <Button onClick={() => navigate("/home")}>Homepage</Button>
+        <a>
+          <button onClick={() => navigate("/")}>Login to another account</button>
+          <button onClick={() => navigate("/home")}>Homepage</button>
+        </a>
       </div>
     );
   }

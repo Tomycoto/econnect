@@ -6,6 +6,7 @@ import {Link} from 'react-router-dom';
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import LoginIcon from '@mui/icons-material/Login';
 import LogoutIcon from '@mui/icons-material/Logout';
+import { useNavigate } from 'react-router-dom';
 
 const Bar = styled.nav`
   display: flex;
@@ -47,6 +48,7 @@ const DesktopBar = styled.ul`
 
 const TopBar = () => {
   const [user, setUser] = useState(null);
+  var navigate = useNavigate();
   useEffect(() => {
     const auth = getAuth();
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -61,17 +63,19 @@ const TopBar = () => {
         <BarItem><a>Daejeon KAIST</a></BarItem>
         <BarItem>
           <div>
-            <EmojiEventsIcon></EmojiEventsIcon>
-            <a >{user ? user.displayName.split('|')[1] : 'Loading...'}</a>
+            <Button style={{color: 'inherit'}} onClick={() => navigate("/leaderboard")}>
+              <EmojiEventsIcon/>
+              <a >{user ? user.displayName.split('|')[1] : 'Loading...'}</a>
+            </Button>
           </div>
         </BarItem>
         {user ? (
           <>
             <BarItem><Button style={{color: 'inherit'}} disabled>{user ? user.displayName.split('|')[0] : 'Loading...'}</Button></BarItem>
-            <BarItem><Button component={Link} to="/logout" style={{color: 'inherit'}}><LogoutIcon/></Button></BarItem>
+            <BarItem><Button style={{color: 'inherit'}} onClick={() => navigate("/logout")}><LogoutIcon/></Button></BarItem>
           </>
         ) : (
-          <BarItem><Button component={Link} to="/" style={{color: 'inherit'}}><LoginIcon/></Button></BarItem>
+          <BarItem><Button style={{color: 'inherit'}} onClick={() => navigate("/")}><LoginIcon/></Button></BarItem>
         )}
       </DesktopBar>
     </Bar>

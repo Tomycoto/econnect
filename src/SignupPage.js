@@ -1,3 +1,4 @@
+import './SignupPage.css';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getAuth, createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
@@ -53,8 +54,8 @@ function SignupPage() {
     };
   
     return (
-      <div>
-        <h2>Sign Up</h2>
+      <div className="signupPage">
+        <h2>Signup</h2>
         <form onSubmit={Signup}>
           <input type="text" placeholder="Username" onChange={e => setUsername(e.target.value)} />
           <input type="email" placeholder="Email" onChange={e => setEmail(e.target.value)} />

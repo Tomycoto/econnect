@@ -6,6 +6,7 @@ import SignupPage from "./SignupPage";
 import LogoutPage from "./LogoutPage";
 import Mappage from "./Mappage";
 import CreatePost from "./CreatePost";
+import Leaderboard from "./Leaderboard";
 
 const rootElement = document.getElementById("root");
 render(
@@ -17,6 +18,7 @@ render(
       <Route path="/logout" element={<LogoutPage />} />
       <Route path="/map" element={<Mappage />} />
       <Route path="/createPost" element={<CreatePost />} />
+      <Route path="/leaderboard" element={<Leaderboard />} />
     </Routes>
   </BrowserRouter>,
   rootElement

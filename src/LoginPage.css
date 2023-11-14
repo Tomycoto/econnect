@@ -1,0 +1,60 @@
+.loginPage body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+}
+
+.loginPage h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.loginPage form {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
+    width: 30%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.loginPage input {
+    display: block;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+    padding: 12px 20px;
+    width: 100%;
+    margin: 8px 0;
+}
+
+.loginPage button {
+    background-color: #4c7caf;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+}
+
+.loginPage button:hover {
+    opacity: 0.8;
+}
+
+.loginPage p {
+    text-align: center;
+}
+
+.loginPage p button {
+    background-color: transparent;
+    color: #4CAF50;
+    padding: 0;
+    margin: 0;
+    border: none;
+    cursor: pointer;
+    width: auto;
+}

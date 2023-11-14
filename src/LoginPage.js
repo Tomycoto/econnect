@@ -1,3 +1,4 @@
+import './LoginPage.css';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
@@ -36,7 +37,7 @@ function LoginPage() {
     };
   
     return (
-      <div>
+      <div className="loginPage">
         <h2>Login</h2>
         <form onSubmit={Login}>
           <input type="email" placeholder="Email" onChange={e => setEmail(e.target.value)} />
@@ -44,7 +45,7 @@ function LoginPage() {
           <button type="submit">Login</button>
         </form>
         {error && <p>{error}</p>}
-        <p>Don't have an account? <a href="/signup">Sign Up</a></p>
+        <p>Don't have an account? <button onClick={() => navigate("/signup")}>Sign up</button></p>
       </div>
     );
   }

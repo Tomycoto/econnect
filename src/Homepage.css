@@ -37,12 +37,6 @@
   }
 }
 
-.leaflet-container {
-  width: 80vw;
-  height: 80vh;
-  margin-left: 15%;
-}
-
 body {
   margin: 0;
   padding: 0;

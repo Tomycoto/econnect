@@ -12,7 +12,6 @@ import icon from './img/loc_pin.png';
 import { getAuth, updateProfile } from "firebase/auth";
 import ThumbUpOffAlt from '@mui/icons-material/ThumbUpOffAlt';
 import ThumbUpAlt from '@mui/icons-material/ThumbUpAlt';
-import { click } from '@testing-library/user-event/dist/click';
 
 const MappageContainer = styled.div`
   max-width: 100%;

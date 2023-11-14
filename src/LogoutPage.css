@@ -1,0 +1,35 @@
+.logoutPage body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+}
+
+.logoutPage h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.logoutPage a {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 20%;
+    position: absolute;
+    top: 25%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.logoutPage button {
+    background-color: rgb(233, 231, 227);
+    padding: 10px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    align-self: center;
+}
+
+.logoutPage button:hover {
+    opacity: 0.8;
+}
