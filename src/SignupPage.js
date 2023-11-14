@@ -45,7 +45,7 @@ function SignupPage() {
             // An error happened.
             console.log(error);
           });
-          navigate("/");
+          navigate("/home");
         })
         .catch((error) => {
           setError(error.message);

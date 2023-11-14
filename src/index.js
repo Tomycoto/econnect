@@ -1,7 +1,7 @@
 import { render } from "react-dom";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import App from "./App";
-import LoginPage from "./LoginPage";
+import Home from "./Homepage";
 import SignupPage from "./SignupPage";
 import LogoutPage from "./LogoutPage";
 import Mappage from "./Mappage";
@@ -12,7 +12,7 @@ render(
   <BrowserRouter>
     <Routes>
       <Route path="/" element={<App />} />
-      <Route path="/login" element={<LoginPage />} />
+      <Route path="/home" element={<Home />} />
       <Route path="/signup" element={<SignupPage />} />
       <Route path="/logout" element={<LogoutPage />} />
       <Route path="/map" element={<Mappage />} />

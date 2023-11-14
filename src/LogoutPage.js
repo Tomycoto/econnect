@@ -19,8 +19,8 @@ function LogoutPage() {
     return (
       <div>
         <h2>You have been disconnected.</h2>
-        <Button onClick={() => navigate("/login")}>Login to another account</Button>
-        <Button onClick={() => navigate("/")}>Homepage</Button>
+        <Button onClick={() => navigate("/")}>Login to another account</Button>
+        <Button onClick={() => navigate("/home")}>Homepage</Button>
       </div>
     );
   }

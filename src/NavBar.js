@@ -12,14 +12,14 @@ const NavBar = ({activeItem}) => {
             '& .MuiDrawer-paper': {
                 position: 'fixed',
                 width: '15%',
-                marginTop: '8%',
+                marginTop: '8.2%',
             },
             }}
             variant="permanent"
             anchor="left">
             <List>
                 <div>
-                    <ListItem component ={Link} to="/" style={{color: 'inherit', background: activeItem === 'Home' ? '#F4FEF2' : 'white', pointerEvents: activeItem === 'Home' ? 'none' : 'auto' }}>
+                    <ListItem component ={Link} to="/home" style={{color: 'inherit', background: activeItem === 'Home' ? '#F4FEF2' : 'white', pointerEvents: activeItem === 'Home' ? 'none' : 'auto' }}>
                         <ListItemButton>
                             <ListItemIcon>
                                 <HomeIcon style={{ color: activeItem === 'Home' ? '#8FEF79' : 'inherit' }}/>

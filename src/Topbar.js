@@ -71,7 +71,7 @@ const TopBar = () => {
             <BarItem><Button component={Link} to="/logout" style={{color: 'inherit'}}><LogoutIcon/></Button></BarItem>
           </>
         ) : (
-          <BarItem><Button component={Link} to="/login" style={{color: 'inherit'}}><LoginIcon/></Button></BarItem>
+          <BarItem><Button component={Link} to="/" style={{color: 'inherit'}}><LoginIcon/></Button></BarItem>
         )}
       </DesktopBar>
     </Bar>
