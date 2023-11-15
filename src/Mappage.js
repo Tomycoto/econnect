@@ -12,6 +12,7 @@ import icon from './img/loc_pin.png';
 import { getAuth, updateProfile } from "firebase/auth";
 import ThumbUpOffAlt from '@mui/icons-material/ThumbUpOffAlt';
 import ThumbUpAlt from '@mui/icons-material/ThumbUpAlt';
+import { useNavigate } from 'react-router-dom';
 
 const MappageContainer = styled.div`
   max-width: 100%;
@@ -25,14 +26,64 @@ const LayoutContainer = styled.div`
 `;
 
 const MarkerContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  border: 1px solid #ccc;
-  padding: 10px;
-  margin-bottom: 10px;
-  border-radius: 5px;
+  background-color: #F4FEF2;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transition: 0.3s;
+  width: 30vw;
+  height: auto;
+  margin-bottom: 20px;
+  padding: 20px;
+  box-sizing: border-box;
+  position: relative;
+  overflow: auto;
+
+  &:hover {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+  }
+
+  input[type="text"] {
+    width: 90%;
+    padding: 5px;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px 0 rgba(0,0,0,0.2);
+    margin-bottom: 10px;
+  }
 `;
+
+const CommentWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+const CommentDiv = styled.div`
+  position: relative;
+  font-size: small;
+  flex-grow: 1;
+`;
+
+const ArrowButton = styled.button`
+  position: absolute;
+  top: 0;
+  left: 80px;
+  border: none;
+  background-color: inherit;
+  cursor: pointer;
+`;
+
+const SubmitButton = styled.div`
+  border: none;
+  background-color: #DDDDDD;
+  color: black;
+  width: fit-content;
+  padding: 5px 10px;
+  font-size: 12px;
+  cursor: pointer;
+  border-radius: 10px;
+`;
+
 
 const MarkerContent = styled.div`
   display: flex;
@@ -71,6 +122,7 @@ function writeEventData(username, title, text, position) {
 }
 
 function Mappage() {
+  var navigate = useNavigate();
   const auth = getAuth();
   const user = auth.currentUser;
   var events_ref = db.ref("events");
@@ -97,7 +149,7 @@ function Mappage() {
         let username = user.displayName.split('|')[0];
         let newClicked = newMarkers.map(marker => marker.voters.includes(username));
         setClicked(newClicked);
-        setGainedPoints(newClicked);
+        //setGainedPoints(newClicked);
       }
     }
   });
@@ -139,6 +191,9 @@ function Mappage() {
     const pin = markers[index];
     let name = user.displayName.split('|')[0];
     pin.thumbsup += value;
+    var newMarkers = [...markers];
+    newMarkers[index] = pin;
+    setMarkers(newMarkers);
     if (pin.key) {
       var itemRef = events_ref.child(pin.key);
       if (value<0){
@@ -151,6 +206,20 @@ function Mappage() {
         itemRef.update({
           thumbsup: pin.thumbsup,
           voters: [...pin.voters, name],
+        }).then(() => {
+          if (!(gainedPoints[index])) {
+            let newGainedPoints = [...gainedPoints];
+            newGainedPoints[index] = true;
+            setGainedPoints(newGainedPoints);
+            let displayName = user.displayName;
+            let [username, points] = displayName.split('|');
+            let newPoints = parseInt(points) + 1;
+            updateProfile(auth.currentUser, {
+              displayName: `${username}|${newPoints}`,
+            }).then(() => {
+              navigate("/map");
+            });
+          }
         });
       }
       else {
@@ -159,21 +228,7 @@ function Mappage() {
         });
       }
     }
-    var newMarkers = [...markers];
-    newMarkers[index] = pin;
-    setMarkers(newMarkers);
-    if (value<0 && !gainedPoints[index]) {
-      let newGainedPoints = [...gainedPoints];
-      newGainedPoints[index] = true;
-      setGainedPoints(newGainedPoints);
-      let displayName = user.displayName;
-      let [username, points] = displayName.split('|');
-      let newPoints = parseInt(points) + 1;
-      updateProfile(auth.currentUser, {
-        displayName: `${username}|${newPoints}`,
-      })
-    }
-  };  
+  };
 
   function removeMarker(index) {
     setMarkers(markers.filter((_, idx) => idx !== index));
@@ -247,10 +302,14 @@ function Mappage() {
     marker.comments.push({author: user.displayName.split('|')[0], text: currentComment});
     newMarkers[idx] = marker;
     setMarkers(newMarkers);
-    setCurrentComment(""); // Clear the current comment
+    setCurrentComment("");
+    if (marker.key) {
+      var itemRef = events_ref.child(marker.key);
+        itemRef.update({
+          comments: marker.comments
+        });
+    }
   };
-  
-  
 
   return (
     <MappageContainer>
@@ -267,10 +326,10 @@ function Mappage() {
           </MapContainer>
           <div style={{marginLeft: '80%', width: '35%' }}>
           {markers.map((marker, idx) => (
-            <MarkerContainer style={savedMarkers.includes(idx) ? {backgroundColor: '#F4FEF2'} : {}} key={idx}>
+            <MarkerContainer style={savedMarkers.includes(idx) ? {backgroundColor: '#F4FEF2'} : {backgroundColor: 'white'}} key={idx}>
               <MarkerContent>
                 <div style={{fontSize: 'small'}}>
-                  {marker.username}
+                  @{marker.username}
                 </div>
                 <input 
                   type="text" 
@@ -286,41 +345,46 @@ function Mappage() {
                   onChange={(event) => handleTextChange(event, idx)}
                   readOnly={marker.username !== user.displayName.split('|')[0]}
                 />
-                <div style={{fontSize: 'small'/*, position: 'absolute', bottom: 0, left: 0*/}}>
-                  Comments: {marker.comments && marker.comments.length ? marker.comments.length : 0}
-                  <Button onClick={() => toggleComments(idx)}>
-                    {showComments[idx] ? '▼' : '▶'}
-                  </Button>
-                  {showComments[idx] && 
-                    <div>
-                      {Array.isArray(marker.comments) && marker.comments.map((comment, commentIdx) => (
-                        <div key={commentIdx}>{comment.author}: {comment.text}</div>
-                      ))}
-                      <input 
-                        type="text" 
-                        placeholder="Write a comment..."
-                        value={currentComment}
-                        onChange={handleCommentChange}
-                      />
-                      <button onClick={() => handleSubmitComment(idx)}>Submit</button>
-                    </div>
+                <CommentWrapper>
+                  <CommentDiv>
+                    Comments: {marker.comments && marker.comments.length ? marker.comments.length : 0}
+                    <ArrowButton onClick={() => toggleComments(idx)}>
+                      {showComments[idx] ? '▼' : '▶'}
+                    </ArrowButton>
+                    {showComments[idx] && 
+                      <div>
+                        {Array.isArray(marker.comments) && marker.comments.map((comment, commentIdx) => (
+                          <div key={commentIdx}>{comment.author}: {comment.text}</div>
+                        ))}
+                        <input 
+                          type="text" 
+                          placeholder="Write a comment..."
+                          value={currentComment}
+                          onChange={handleCommentChange}
+                        />
+                        <SubmitButton onClick={() => handleSubmitComment(idx)}>Submit</SubmitButton>
+                      </div>
+                    }
+                  </CommentDiv>
+                  {marker.username === user.displayName.split('|')[0] && 
+                    <>
+                      <Button onClick={() => removeMarker(idx)}>✖️</Button>
+                      <Button onClick={() => saveMarker(idx)}>✔️</Button>
+                    </>
                   }
-                </div>
+                  {savedMarkers.includes(idx) ? 
+                    <Button onClick={() => {
+                      const clickedValue = !clicked[idx];
+                      let newClicked = [...clicked];
+                      newClicked[idx] = clickedValue;
+                      setClicked(newClicked);
+                      clicked[idx] ? changeThumbsup(idx,-1) : changeThumbsup(idx,1);
+                    }}>
+                      {clicked[idx] ? <ThumbUpAlt /> : <ThumbUpOffAlt />} {marker.thumbsup}
+                    </Button>                 
+                  : null}         
+                </CommentWrapper>
               </MarkerContent>
-              {marker.username === user.displayName.split('|')[0] && 
-                <>
-                  <Button onClick={() => removeMarker(idx)}>✖️</Button>
-                  <Button onClick={() => saveMarker(idx)}>✔️</Button>
-                </>
-              }
-              {savedMarkers.includes(idx) ? 
-                <Button onClick={() => {let newClicked = [...clicked];
-                  newClicked[idx] = !newClicked[idx];
-                  setClicked(newClicked);
-                  clicked[idx] ? changeThumbsup(idx,-1) : changeThumbsup(idx,1);}}>
-                  {clicked[idx] ? <ThumbUpAlt /> : <ThumbUpOffAlt />} {marker.thumbsup}
-                </Button> 
-              : null}
             </MarkerContainer>
           ))}
           </div>
@@ -328,6 +392,7 @@ function Mappage() {
       </LayoutContainer>
     </MappageContainer>
   );
+  
 }
 
 export default Mappage;

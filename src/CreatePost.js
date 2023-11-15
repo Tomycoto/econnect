@@ -78,13 +78,15 @@ const CreatePost = () => {
         let newPoints = parseInt(points) + 2;
         updateProfile(auth.currentUser, {
           displayName: `${username}|${newPoints}`,
-        })
-        navigate("/home");
+        }).then(() => {
+          // Navigate to "/home" after the profile update is successful
+          navigate("/home");
+        });
       })
       .catch((error) => {
         console.error("Posting failed", error);
       });
-  }
+  }  
 
   return (
     <Container>

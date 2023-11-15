@@ -7,6 +7,7 @@ import LogoutPage from "./LogoutPage";
 import Mappage from "./Mappage";
 import CreatePost from "./CreatePost";
 import Leaderboard from "./Leaderboard";
+import NoMatchpage from "./NoMatchpage";
 
 const rootElement = document.getElementById("root");
 render(
@@ -19,9 +20,8 @@ render(
       <Route path="/map" element={<Mappage />} />
       <Route path="/createPost" element={<CreatePost />} />
       <Route path="/leaderboard" element={<Leaderboard />} />
+      <Route path="*" element={<NoMatchpage />} />
     </Routes>
   </BrowserRouter>,
   rootElement
 );
-
-//<Route path="*" element={<NoMatchpage />} />

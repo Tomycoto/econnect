@@ -41,12 +41,12 @@ function SignupPage() {
           .then(() => {
             // Profile updated successfully!
             console.log(user.displayName);
+            navigate("/home");
           })
           .catch((error) => {
             // An error happened.
             console.log(error);
           });
-          navigate("/home");
         })
         .catch((error) => {
           setError(error.message);
