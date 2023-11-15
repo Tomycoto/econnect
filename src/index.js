@@ -8,6 +8,7 @@ import Mappage from "./Mappage";
 import CreatePost from "./CreatePost";
 import Leaderboard from "./Leaderboard";
 import NoMatchpage from "./NoMatchpage";
+import PostView from "./PostView";
 
 const rootElement = document.getElementById("root");
 render(
@@ -19,6 +20,7 @@ render(
       <Route path="/logout" element={<LogoutPage />} />
       <Route path="/map" element={<Mappage />} />
       <Route path="/createPost" element={<CreatePost />} />
+      <Route path="/post/:key" element={<PostView/>} />
       <Route path="/leaderboard" element={<Leaderboard />} />
       <Route path="*" element={<NoMatchpage />} />
     </Routes>

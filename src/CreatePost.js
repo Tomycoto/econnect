@@ -67,6 +67,7 @@ const CreatePost = () => {
       timestamp: calcDate(),
       tags: processTags(tags),
       likes: likes,
+      replies: {}
     })
       .then(() => {
         console.log("Post added successfully");
