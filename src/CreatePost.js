@@ -62,6 +62,7 @@ const CreatePost = () => {
       timestamp: calcDate(),
       tags: processTags(tags),
       likes: likes,
+      replies: {}
     })
       .then(() => {
         console.log("Post added successfully");
@@ -88,7 +89,7 @@ const CreatePost = () => {
             </Typography>
             <form noValidate autoComplete="off">
               <div style={{ marginBottom: 15 }}>
-                <TextField value={tagValue} onChange={(e) => (setTagValue(e.target.value))} label="Add some tags separated by commas: e.g. gardening, tips" fullWidth />
+              <TextField value={tagValue} onChange={(e) => (setTagValue(e.target.value))} label="Add some tags separated by commas: e.g. gardening, tips" fullWidth />
               </div>
               <div style={{ marginBottom: 15 }}>
                 <TextField value={titleValue} onChange={(e) => (setTitleValue(e.target.value))} label="Name the issue" fullWidth />
@@ -100,7 +101,7 @@ const CreatePost = () => {
             </form>
           </CardContent>
           <CardActions style={{ justifyContent: 'flex-end' }}>
-            <Button onClick={() => writeForumData(titleValue, contentValue, 0, tagValue)} variant="contained" >
+          <Button onClick={() => writeForumData(titleValue, contentValue, 0, tagValue)} variant="contained" >
               <EmojiEventsIcon></EmojiEventsIcon>
               +2 Post
             </Button>
