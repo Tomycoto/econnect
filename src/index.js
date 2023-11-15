@@ -1,5 +1,5 @@
 import { render } from "react-dom";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { HashRouter, Routes, Route } from "react-router-dom";
 import App from "./App";
 import Home from "./Homepage";
 import SignupPage from "./SignupPage";
@@ -12,7 +12,7 @@ import PostView from "./PostView";
 
 const rootElement = document.getElementById("root");
 render(
-  <BrowserRouter>
+  <HashRouter>
     <Routes>
       <Route path="/" element={<App />} />
       <Route path="/home" element={<Home />} />
@@ -24,6 +24,6 @@ render(
       <Route path="/leaderboard" element={<Leaderboard />} />
       <Route path="*" element={<NoMatchpage />} />
     </Routes>
-  </BrowserRouter>,
+  </HashRouter>,
   rootElement
 );
