@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/econnect/static/css/main.3479a3cd.css",
-    "main.js": "/econnect/static/js/main.fe3f89ed.js",
+    "main.js": "/econnect/static/js/main.be57f0f3.js",
     "static/media/loc_pin.png": "/econnect/static/media/loc_pin.64cdcb0ef97818161310.png",
     "index.html": "/econnect/index.html",
     "main.3479a3cd.css.map": "/econnect/static/css/main.3479a3cd.css.map",
-    "main.fe3f89ed.js.map": "/econnect/static/js/main.fe3f89ed.js.map"
+    "main.be57f0f3.js.map": "/econnect/static/js/main.be57f0f3.js.map"
   },
   "entrypoints": [
     "static/css/main.3479a3cd.css",
-    "static/js/main.fe3f89ed.js"
+    "static/js/main.be57f0f3.js"
   ]
 }
