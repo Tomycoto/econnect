@@ -1,7 +1,7 @@
 {
   "name": "econnect",
   "version": "0.1.0",
-  "homepage": "https://econnect.github.io/react-gh-pages",
+  "homepage": "https://tomycoto.github.io/econnect",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.11.1",
