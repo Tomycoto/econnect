@@ -11,6 +11,8 @@ import NavBar from './NavBar';
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 import { db } from './firebase';
 import { useState } from 'react';
+import { getAuth, updateProfile } from "firebase/auth";
+import { useNavigate } from 'react-router-dom';
 
 const Container = styled.div`
   max-width: 100%;
@@ -49,14 +51,17 @@ function processTags(tags) {
 
 
 const CreatePost = () => {
+  const auth = getAuth();
+  const user = auth.currentUser;
   const [titleValue, setTitleValue] = useState('');
   const [contentValue, setContentValue] = useState('');
   const [tagValue, setTagValue] = useState('');
+  var navigate = useNavigate();
 
-  function writeForumData(title, content, likes, tags) {
+  function writeForumData(title, content, likes, tags, navigate) {
     var db_ref = db.ref("forum");
     db_ref.push().set({
-      username: "username", //TODO change username
+      username: user.displayName.split('|')[0],
       title: title,
       content: content,
       timestamp: calcDate(),
@@ -69,13 +74,20 @@ const CreatePost = () => {
         setTagValue('');
         setTitleValue('');
         setContentValue('');
-        //TODO add point additions
-        //TODO maybe link to home page
+        let displayName = user.displayName;
+        let [username, points] = displayName.split('|');
+        let newPoints = parseInt(points) + 2;
+        updateProfile(auth.currentUser, {
+          displayName: `${username}|${newPoints}`,
+        }).then(() => {
+          // Navigate to "/home" after the profile update is successful
+          navigate("/home");
+        });
       })
       .catch((error) => {
         console.error("Posting failed", error);
       });
-  }
+  }  
 
   return (
     <Container>
@@ -89,7 +101,7 @@ const CreatePost = () => {
             </Typography>
             <form noValidate autoComplete="off">
               <div style={{ marginBottom: 15 }}>
-              <TextField value={tagValue} onChange={(e) => (setTagValue(e.target.value))} label="Add some tags separated by commas: e.g. gardening, tips" fullWidth />
+                <TextField value={tagValue} onChange={(e) => (setTagValue(e.target.value))} label="Add some tags separated by commas: e.g. gardening, tips" fullWidth />
               </div>
               <div style={{ marginBottom: 15 }}>
                 <TextField value={titleValue} onChange={(e) => (setTitleValue(e.target.value))} label="Name the issue" fullWidth />
@@ -101,7 +113,7 @@ const CreatePost = () => {
             </form>
           </CardContent>
           <CardActions style={{ justifyContent: 'flex-end' }}>
-          <Button onClick={() => writeForumData(titleValue, contentValue, 0, tagValue)} variant="contained" >
+            <Button onClick={() => writeForumData(titleValue, contentValue, 0, tagValue, navigate)} variant="contained" >
               <EmojiEventsIcon></EmojiEventsIcon>
               +2 Post
             </Button>

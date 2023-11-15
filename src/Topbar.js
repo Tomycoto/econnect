@@ -1,6 +1,12 @@
-import React from 'react';
+import {React, useState, useEffect} from 'react';
 import styled from 'styled-components';
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
+import {Button} from '@mui/material';
+import {Link} from 'react-router-dom';
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import LoginIcon from '@mui/icons-material/Login';
+import LogoutIcon from '@mui/icons-material/Logout';
+import { useNavigate } from 'react-router-dom';
 
 const Bar = styled.nav`
   display: flex;
@@ -41,6 +47,15 @@ const DesktopBar = styled.ul`
 `;
 
 const TopBar = () => {
+  const [user, setUser] = useState(null);
+  var navigate = useNavigate();
+  useEffect(() => {
+    const auth = getAuth();
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+    });
+    return () => unsubscribe();
+  }, [user]);
   return (
     <Bar>
       <Logo>ECOnnect</Logo>
@@ -48,12 +63,20 @@ const TopBar = () => {
         <BarItem><a>Daejeon KAIST</a></BarItem>
         <BarItem>
           <div>
-            <EmojiEventsIcon></EmojiEventsIcon>
-            <a >2000</a>
+            <Button style={{color: 'inherit'}} onClick={() => navigate("/leaderboard")}>
+              <EmojiEventsIcon/>
+              <a >{user ? user.displayName.split('|')[1] : 'Loading...'}</a>
+            </Button>
           </div>
         </BarItem>
-        <BarItem><a >@Username</a></BarItem>
-        <BarItem></BarItem>
+        {user ? (
+          <>
+            <BarItem><Button style={{color: 'inherit'}} disabled>{user ? user.displayName.split('|')[0] : 'Loading...'}</Button></BarItem>
+            <BarItem><Button style={{color: 'inherit'}} onClick={() => navigate("/logout")}><LogoutIcon/></Button></BarItem>
+          </>
+        ) : (
+          <BarItem><Button style={{color: 'inherit'}} onClick={() => navigate("/")}><LoginIcon/></Button></BarItem>
+        )}
       </DesktopBar>
     </Bar>
   );

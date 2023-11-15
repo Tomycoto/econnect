@@ -1,13 +1,12 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
-import Homepage from './Homepage';
-import ForumOverview from './ForumOverview';
+import LoginPage from './LoginPage';
 
 
 function App() {
   return (
     <Routes>
-      <Route path="/" element={<Homepage/>} />
+      <Route path="/" element={<LoginPage/>} />
     </Routes>
   );
 }

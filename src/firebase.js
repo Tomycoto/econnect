@@ -1,5 +1,8 @@
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/database';    // for realtime database
+import { initializeApp } from "firebase/app";
+import { getAuth } from "firebase/auth";
+import { getDatabase } from "firebase/database";
 
 const firebaseConfig = {
     apiKey: "AIzaSyCgBEeqpfLUpRcTuF6sA4SZMDR5aBJNsIQ",
@@ -21,6 +24,8 @@ const firebaseConfig = {
     appId: "1:464047198047:web:5ef23bf2ae1473c080b0ea"
 };*/
 
+const app = initializeApp(firebaseConfig);
 firebase.initializeApp(firebaseConfig);
 export const db = firebase.database();
-export default firebase;
+export const auth = getAuth(app);
+export default app;
