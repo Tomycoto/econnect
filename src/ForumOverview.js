@@ -8,8 +8,7 @@ import { db } from './firebase';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
-import ThumbUpOutlinedIcon from '@mui/icons-material/ThumbUpOutlined';
-import ShareIcon from '@mui/icons-material/Share';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 
 const Tag = ({ text }) => {
   return (
@@ -102,7 +101,7 @@ const ForumOverview = () => {
   function card(data, index) {
     console.log(data)
     return (
-      <Card style={{ maxWidth: '90%', margin: 'auto', marginTop: 20}} variant="outlined">
+      <Card style={{ maxWidth: '90%', margin: 'auto', marginTop: 20 }} variant="outlined">
         <CardContent style={{ cursor: 'pointer', }} onClick={() => handleCardClick(data.key)} >
           <Typography variant="body1" component="div" gutterBottom>
             @{data.username} - <span style={{ color: '#888' }}>{data.timestamp}</span>
@@ -131,11 +130,8 @@ const ForumOverview = () => {
               <IconTag key="replyAmount" text={replyCount(data)} />
             </div>
             <Button size="small" color="primary" onClick={() => incrementLikes(index)}>
-              <ThumbUpOutlinedIcon></ThumbUpOutlinedIcon> {data.likes}
+              <FavoriteIcon></FavoriteIcon> {data.likes}
             </Button>
-            <Button size="small" color="primary" onClick={()=> console.log(" //TODO Impleemtn sharing")}>
-              <ShareIcon></ShareIcon>
-            </Button> 
           </div>
         </CardActions>
       </Card>

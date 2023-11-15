@@ -13,6 +13,9 @@ import { useParams } from 'react-router-dom';
 import NavBar from './NavBar';
 import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
 import SendIcon from '@mui/icons-material/Send';
+import { getAuth, updateProfile } from 'firebase/auth';
+import SocialMediaPopup from './SocialMediaPopup';
+
 
 const Container = styled.div`
   max-width: 100%;
@@ -62,6 +65,8 @@ const IconTag = ({ text }) => {
 
 
 const PostView = () => {
+    const auth = getAuth();
+    const user = auth.currentUser;
     const { key } = useParams();
     const [replyValue, setReplyValue] = useState('');
     const [currentData, setCurrentData] = useState({});
@@ -84,9 +89,9 @@ const PostView = () => {
     const replyCount = Object.keys(currentData.replies ?? {}).length;
 
     function writeReplyData(content) {
-        var newReplyData = {  //TODO add point additions
+        var newReplyData = {
             content: content,
-            username: "newUser", //TODO change username
+            username: user.displayName.split('|')[0],
             timestamp: calcDate()
         };
 
@@ -96,6 +101,12 @@ const PostView = () => {
         db.ref("forum/" + key + "/replies").update(update)
             .then(() => {
                 setReplyValue('');
+                let displayName = user.displayName;
+                let [username, points] = displayName.split('|');
+                let newPoints = parseInt(points) + 1;
+                updateProfile(auth.currentUser, {
+                    displayName: `${username}|${newPoints}`,
+                })
                 window.location.reload();
             })
             .catch((error) => {
@@ -161,11 +172,9 @@ const PostView = () => {
                             <Tag key={index} text={tagText} />
                         ))}
                     </div>
-                    <div>
+                    <div style={{display: 'flex'}}>
                         <IconTag key="replyAmount" text={replyCount} />
-                        <Button size="small" color="primary">
-                            {currentData.key}
-                        </Button>
+                        <SocialMediaPopup></SocialMediaPopup>
                     </div>
                 </CardActions>
             </Card >
