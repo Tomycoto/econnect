@@ -1,14 +1,14 @@
 {
   "files": {
-    "main.css": "/react-gh-pages/static/css/main.3479a3cd.css",
-    "main.js": "/react-gh-pages/static/js/main.28a3e64c.js",
-    "static/media/loc_pin.png": "/react-gh-pages/static/media/loc_pin.64cdcb0ef97818161310.png",
-    "index.html": "/react-gh-pages/index.html",
-    "main.3479a3cd.css.map": "/react-gh-pages/static/css/main.3479a3cd.css.map",
-    "main.28a3e64c.js.map": "/react-gh-pages/static/js/main.28a3e64c.js.map"
+    "main.css": "/econnect/static/css/main.3479a3cd.css",
+    "main.js": "/econnect/static/js/main.cda0b775.js",
+    "static/media/loc_pin.png": "/econnect/static/media/loc_pin.64cdcb0ef97818161310.png",
+    "index.html": "/econnect/index.html",
+    "main.3479a3cd.css.map": "/econnect/static/css/main.3479a3cd.css.map",
+    "main.cda0b775.js.map": "/econnect/static/js/main.cda0b775.js.map"
   },
   "entrypoints": [
     "static/css/main.3479a3cd.css",
-    "static/js/main.28a3e64c.js"
+    "static/js/main.cda0b775.js"
   ]
 }
